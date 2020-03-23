@@ -60,3 +60,10 @@ Plug 'tjdevries/apyrori.nvim'
 " You may want to put this within a python only part of your config.
 nmap <A-I> <plug>(ApyroriInsert)
 ```
+
+
+### To Do
+
+- [ ] Make a pop up for "contested" imports, so you can choose one easily
+- [ ] Make a pop up for "unknown" imports, so you can just type something and it will drop it at the top of your file
+- [ ] Make a way to add "default" imports, so even if your project doesn't have them, we can add them anyways

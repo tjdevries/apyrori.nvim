@@ -22,7 +22,7 @@ from my_package.services import MagicRequests
 ...
 ```
 
-Now you're editing a new file, and you haven't imported `MagicRequests` yet. If you type out what you want to import and invoke `<plug>(ApyroriInsert)`,
+Now you're editing a new file, and you haven't imported `MagicRequests` yet. If you type out what you want to import and invoke `<plug>ApyroriInsert`,
 the file will go from:
 
 ```python
@@ -58,12 +58,18 @@ Plug 'tjdevries/apyrori.nvim'
 
 ```vim
 " You may want to put this within a python only part of your config.
-nmap <A-I> <plug>(ApyroriInsert)
+nmap <M-i> <plug>ApyroriInsert
 ```
+
+You can see it in action here:
+
+https://asciinema.org/a/4gKqKLPnSSQWQzWEcjveoIY0v
 
 
 ### To Do
 
 - [ ] Make a pop up for "contested" imports, so you can choose one easily
+    - This is sort of done
 - [ ] Make a pop up for "unknown" imports, so you can just type something and it will drop it at the top of your file
 - [ ] Make a way to add "default" imports, so even if your project doesn't have them, we can add them anyways
+- [ ] Make a "fuzzy" importer, and you can choose from  a similar popup as the contested one

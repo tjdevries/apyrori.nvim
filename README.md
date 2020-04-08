@@ -2,7 +2,6 @@
 
 Auto imports for Python based on your current project. The name is a pun on _a priori_. It's not a great pun, but it's a pun nonetheless.
 
-
 ## How it works
 
 It's pretty simple and it's pretty dumb, and that's why it works so great.
@@ -47,11 +46,49 @@ Another benefit is that when you're doing type annotations for Python, it is SO 
 
 ## Installation
 
+Current default setup uses ripgrep, so you should install that. Otherwise see `Configuration`
+
+Otherwise you can just install as normal.
+
 ```vim
 " Used for running jobs in lua
 Plug 'tjdevries/luvjob.nvim'
 " Actual plugin
 Plug 'tjdevries/apyrori.nvim'
+```
+
+## Configuration
+
+`apyrori.nvim` uses lua to do the configuration, so anywhere you have lua you can do the following:
+
+```lua
+require('apyrori.config').new(
+  'name_of_configuration',
+  {
+    command='grep',
+
+    args = function(text)
+        return {'the', 'commands', 'to', 'send', 'to', 'command'}
+    end,
+
+    -- results: the results of running the commands. Split on new lines
+    -- counts: the counts of the various different import styles. Most common will be used.
+    parser  = function(results, counts)
+      for _, result in ipairs(results) do
+        local split_result = require('apyrori.util').string_split(result, ":", 4)
+        local value = split_result[4]
+
+        if counts[value] == nil then
+          counts[value] = 0
+        end
+
+        counts[value] = counts[value] + 1
+      end
+    end
+  },
+  true
+)
+
 ```
 
 ## Usage

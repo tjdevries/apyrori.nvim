@@ -6,20 +6,9 @@ package.loaded['luvjob'] = nil
 package.loaded['apyrori'] = nil
 
 local luvjob = require('luvjob')
+local config_module = require('apyrori.config')
 
 local vim = vim
-local api = vim.api
-
-local function string_split(self, sep, max_count)
-  sep = sep or ":"
-
-  local fields =  {}
-  local pattern = string.format("([^%s]+)", sep)
-
-  self:gsub(pattern, function(c) fields[#fields+1] = c end, max_count)
-
-  return fields
-end
 
 local function get_max(tbl, key)
   local max_val = nil
@@ -46,8 +35,6 @@ end
 local apyrori = {}
 
 function apyrori.find_matches(text, directory)
-  local command = string.format('rg --vimgrep "import %s"', text)
-
   if directory == nil then
     directory = vim.fn.getcwd()
   end
@@ -70,23 +57,16 @@ function apyrori.find_matches(text, directory)
     end
   end
 
+  local config = config_module.get_default()
+
   local grepper = luvjob:new({
-    command = "rg",
-    args = {"--vimgrep", "--type", "py", "-w", string.format("import %s", text)},
+    command = config.command,
+    args = config.args(text),
     cwd = directory,
     on_stdout = on_read,
     on_stderr = on_read,
     on_exit = function(...)
-      for _, result in ipairs(results) do
-        local split_result = string_split(result, ":", 4)
-        local value = split_result[4]
-
-        if counts[value] == nil then
-          counts[value] = 0
-        end
-
-        counts[value] = counts[value] + 1
-      end
+      config.parser(results, counts)
     end,
   })
 

@@ -10,6 +10,11 @@ When you're working on a large project, you've probably imported the thing you w
 This plugin simply looks at all the places you've imported the word under your cursor, picks the most likely (A.K.A. most frequent) import
 and adds that to the top of your file.
 
+### Gif Example
+
+![simple_example](./media/simple_edit.svg)
+
+### Example in code
 
 For example:
 

@@ -34,17 +34,23 @@ config.new(
       return {"--vimgrep", "--type", "py", "-w", string.format("import %s", text)}
     end,
 
-    parser  = function(results, counts)
+    parser  = function(results)
+      local counts = {}
+
       for _, result in ipairs(results) do
         local split_result = require('apyrori.util').string_split(result, ":", 4)
         local value = split_result[4]
 
-        if counts[value] == nil then
-          counts[value] = 0
-        end
+        if value ~= nil then
+          if counts[value] == nil then
+            counts[value] = 0
+          end
 
-        counts[value] = counts[value] + 1
+          counts[value] = counts[value] + 1
+        end
       end
+
+      return counts
     end
   },
   true

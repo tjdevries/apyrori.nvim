@@ -4,6 +4,7 @@
 
 package.loaded['luvjob'] = nil
 package.loaded['apyrori'] = nil
+package.loaded['apyrori.config'] = nil
 
 local luvjob = require('luvjob')
 local config_module = require('apyrori.config')
@@ -39,41 +40,18 @@ function apyrori.find_matches(text, directory)
     directory = vim.fn.getcwd()
   end
 
-  local results = {}
-  local counts = {}
-
-  local on_read = function(err, data)
-    if err then
-      vim.api.nvim_err_writeln("APYRORI ERROR: " .. vim.inspect(err))
-      return
-    end
-
-    if data == nil then
-      return
-    end
-
-    for _, line in ipairs(vim.fn.split(data, "\n")) do
-      table.insert(results, line)
-    end
-  end
-
   local config = config_module.get_default()
 
   local grepper = luvjob:new({
     command = config.command,
     args = config.args(text),
     cwd = directory,
-    on_stdout = on_read,
-    on_stderr = on_read,
-    on_exit = function(...)
-      config.parser(results, counts)
-    end,
   })
 
   grepper:start()
   grepper:wait()
 
-  return counts
+  return config.parser(grepper:stdout_result())
 end
 
 

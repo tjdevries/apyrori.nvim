@@ -51,18 +51,25 @@ Another benefit is that when you're doing type annotations for Python, it is SO 
 
 ## Installation
 
-Current default setup uses ripgrep, so you should install that. Otherwise see `Configuration`
+Current default setup uses ripgrep, so you should install that. Otherwise see `Advanced Configuration`
 
 Otherwise you can just install as normal.
 
 ```vim
 " Used for running jobs in lua
 Plug 'tjdevries/luvjob.nvim'
+
 " Actual plugin
 Plug 'tjdevries/apyrori.nvim'
 ```
+## Usage
 
-## Configuration
+```vim
+" You may want to put this within a python only part of your config.
+nmap <M-i> <plug>ApyroriInsert
+```
+
+## Advanced Configuration
 
 `apyrori.nvim` uses lua to do the configuration, so anywhere you have lua you can do the following:
 
@@ -94,13 +101,6 @@ require('apyrori.config').new(
   true
 )
 
-```
-
-## Usage
-
-```vim
-" You may want to put this within a python only part of your config.
-nmap <M-i> <plug>ApyroriInsert
 ```
 
 You can see it in action here:

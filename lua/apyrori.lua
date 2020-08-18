@@ -2,11 +2,8 @@
 -- A module that's based on the pun of a priori
 --  We'll just know where you want to import from
 
-package.loaded['luvjob'] = nil
-package.loaded['apyrori'] = nil
-package.loaded['apyrori.config'] = nil
+local Job = require('plenary.job')
 
-local luvjob = require('luvjob')
 local config_module = require('apyrori.config')
 
 local vim = vim
@@ -42,7 +39,7 @@ function apyrori.find_matches(text, directory)
 
   local config = config_module.get_default()
 
-  local grepper = luvjob:new({
+  local grepper = Job:new({
     command = config.command,
     args = config.args(text),
     cwd = directory,

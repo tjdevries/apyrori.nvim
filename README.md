@@ -57,7 +57,7 @@ Otherwise you can just install as normal.
 
 ```vim
 " Used for running jobs in lua
-Plug 'tjdevries/luvjob.nvim'
+Plug 'nvim-lua/plenary.nvim'
 
 " Actual plugin
 Plug 'tjdevries/apyrori.nvim'

@@ -56,5 +56,4 @@ config.new(
   true
 )
 
-
 return config

@@ -2,6 +2,8 @@
 -- A module that's based on the pun of a priori
 --  We'll just know where you want to import from
 
+-- require('plenary.reload').reload_module('apyrori')
+
 local Job = require('plenary.job')
 
 local config_module = require('apyrori.config')
@@ -48,7 +50,7 @@ function apyrori.find_matches(text, directory)
   grepper:start()
   grepper:wait()
 
-  return config.parser(grepper:stdout_result())
+  return config.parser(self.results)
 end
 
 
@@ -70,7 +72,7 @@ function apyrori.find_and_insert_match(text, directory, choose_most_likely)
     choose_most_likely = true
   end
 
-  if choose_most_likely or #potential_matches <= 1 then
+  if choose_most_likely or (potential_matches and #potential_matches <= 1) then
     local most_likely_match = apyrori.get_most_likely_match(potential_matches)
     apyrori.insert_match(0, most_likely_match)
   else

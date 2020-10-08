@@ -47,10 +47,7 @@ function apyrori.find_matches(text, directory)
     cwd = directory,
   })
 
-  grepper:start()
-  grepper:wait()
-
-  return config.parser(self.results)
+  return config.parser(grepper:sync())
 end
 
 
